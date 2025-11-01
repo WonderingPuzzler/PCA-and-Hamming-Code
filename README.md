@@ -14,4 +14,21 @@ Additionally, I created a whole bunch of matrix operations (matrix subtraction, 
 
 After creating the PCA and Image Classifier, I then created Hamming Code program! This one uses principles like vector and matrix multiplication to find and correct errors within numerical input it receives. It also has features of linear independence and often involves the identity matrix, or a similar such matrix, in its error-finding and correcting algorithms. Example outputs for this one are provided as well!
 
-I'll be creating a usage file as well that should show up soon!
+## Credits
+
+Big thanks to the following sources! They've been huge helps to me in the process of creating these programs!
+
+Michael Dipperstein - https://michaeldipperstein.github.io/hamming.html 
+Vandita Gupta - https://www.geeksforgeeks.org/python/outer-product-on-vector/
+Zakaria Jaadi https://builtin.com/data-science/step-step-explanation-principal-component-analysis
+aishwarya - https://www.geeksforgeeks.org/data-analysis/principal-component-analysis-pca/
+Michel Kulhandjian & Atri Rudra - https://cse.buffalo.edu/faculty/atri/courses/coding-theory/lectures/lect5.pdf
+Haoru Liu - https://math.uchicago.edu/~may/REU2012/REUPapers/LiuH.pdf
+Marvin Lanhenke - https://builtin.com/data-science/eigendecomposition
+Mirko Savasta - https://medium.com/analytics-vidhya/pca-a-linear-transformation-f8aacd4eb007
+Stephen Roberts & Michaelmas Term - https://www.robots.ox.ac.uk/~sjrob/Teaching/EngComp/ecl4.pdf
+Weisstein, Eric W. "Finite Field." From MathWorld--A Wolfram Resource. https://mathworld.wolfram.com/FiniteField.html
+Dan Margalit, Joseph Rabinoff, & Larry Rolen - https://textbooks.math.gatech.edu/ila/determinants-cofactors.html
+vinayedula - https://www.geeksforgeeks.org/python/power-method-determine-largest-eigenvalue-and-eigenvector-in-python/
+kartik - https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
+
