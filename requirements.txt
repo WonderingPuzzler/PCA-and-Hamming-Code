@@ -1,0 +1,12 @@
+# Core scientific computing libraries
+numpy>=1.21.0
+scikit-learn>=1.0.0
+matplotlib>=3.5.0
+
+# Progress bars for better user experience
+tqdm>=4.64.0
+
+# Note: The following are Python standard library modules (no installation needed):
+# - math (built-in)
+# - random (built-in) 
+# - time (built-in)
