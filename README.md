@@ -13,3 +13,5 @@ Additionally, I created a whole bunch of matrix operations (matrix subtraction, 
 ![alt text](https://github.com/WonderingPuzzler/PCA-and-Hamming-Code/blob/main/pca_classification_results_30_samples.png "PCA_Image_classification_Example")
 
 After creating the PCA and Image Classifier, I then created Hamming Code program! This one uses principles like vector and matrix multiplication to find and correct errors within numerical input it receives. It also has features of linear independence and often involves the identity matrix, or a similar such matrix, in its error-finding and correcting algorithms. Example outputs for this one are provided as well!
+
+I'll be creating a usage file as well that should show up soon!
