@@ -44,3 +44,8 @@ vinayedula - https://www.geeksforgeeks.org/python/power-method-determine-largest
 
 kartik - https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
 
+Daniel Bourke - https://www.learnpytorch.io/      
+https://www.learnpytorch.io/01_pytorch_workflow/   
+https://www.learnpytorch.io/02_pytorch_classification/      
+https://www.learnpytorch.io/03_pytorch_computer_vision/
+
