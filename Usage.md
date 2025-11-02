@@ -36,9 +36,9 @@ pip install -r requirements.txt
 ### Option 2: Manual Setup
 
 ```bash
-# 1. Download the project files to a folder named PCA_-_Hamming_Code
+# 1. Download the project files to a folder named PCA-and-Hamming-Code
 # 2. Navigate to the project directory
-cd PCA_-_Hamming_Code
+cd PCA-and=Hamming-Code
 
 # 3. Create a virtual environment (recommended)
 python -m venv .venv
