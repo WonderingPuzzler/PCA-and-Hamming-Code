@@ -278,6 +278,9 @@ class PCAImageClassifier(PCA):
         Parameters:
         images (list of lists): Training images where each row is an image
         labels (list): Training labels
+
+        Returns:
+        images_pca (list of lists): PCA-transformed training images
         """
         try:
 
@@ -302,12 +305,14 @@ class PCAImageClassifier(PCA):
 
             print(f"Stored {len(self.get_training_data_pca())} training samples in PCA space for k-NN (k={self.get_k()})")
 
+            return images_pca # return the PCA-transformed training images
+    
         except (TypeError, ValueError):
             print("Error. Ensure images and labels are valid.")
             return
-        
-    
-    def __predict(self, images):
+
+
+    def __predict(self, images, labels):
         """
         Predict labels for new images using k-Nearest Neighbors.
         
@@ -333,7 +338,7 @@ class PCAImageClassifier(PCA):
                 raise ValueError("Classifier must be trained before prediction.")
 
             # Step 1: Transform new images to PCA space
-            images_pca = self.transform(images)
+            images_pca = self.__train(images, labels)
 
             if images_pca is None:
                 raise ValueError("PCA transformation failed during prediction.")
@@ -458,7 +463,7 @@ class PCAImageClassifier(PCA):
                 raise ValueError("Invalid test images or labels.")
 
             # Step 1: Predict labels for test images
-            predictions = self.__predict(test_images)
+            predictions = self.__predict(test_images, test_labels)
 
             if predictions is None:
                 raise ValueError("Prediction failed during evaluation.")

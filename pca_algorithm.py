@@ -244,7 +244,7 @@ class PCA(VectorMatrixOperations):
 
     def __center_data(self, X, mean):
         """
-        Center the data by subtracting the mean from each feature (column).
+        Center the data by subtracting the mean of each feature (column) from each feature (column).
         
         Parameters:
         X (list of lists): The input data to be centered.
@@ -294,6 +294,10 @@ class PCA(VectorMatrixOperations):
         Uses equation Cov(X,X) = (1/n-1) * X_centered^T * X_centered
         n = number of samples, or in the language of matrices, the number of rows in X_centered
         Uses matrix_multiply function for computation.
+        Note the exact equation for the covariance matrix is: Cov(X,X) = sum ((X - mean_X) * (X - mean_X))^T / (n - 1)
+        But since we are passing in centered data, we can use the simplified equation above.
+
+        The covariance matrix is important because it shows us how the different parts of the matrix are related to each other.
 
         Parameters:
         X_centered (list of lists): The centered data.
@@ -369,7 +373,7 @@ class PCA(VectorMatrixOperations):
             return None
 
     # Eigen Decomposition Computations
-    def __power_iteration(self, A, num_iterations= 50, tolerance=1.0):
+    def __power_iteration(self, A, num_iterations= 50, tolerance=0.999999):
         """
         Perform power iteration to find the dominant eigenvalue and eigenvector of matrix A.
         We perform power iteration because it is an efficient algorithm for finding the largest eigenvalue and corresponding eigenvector of a matrix,
@@ -444,7 +448,7 @@ class PCA(VectorMatrixOperations):
                 
                 # Check if the change is below the tolerance 
                 # (float arithmetic is rarely exact, so we use a small threshold instead of exact zero)
-                if abs(convergence_check) > tolerance: 
+                if abs(convergence_check) >= tolerance: 
                     pbar.set_description("Power iteration (converged)")
                     pbar.close()
                     break
@@ -559,6 +563,7 @@ class PCA(VectorMatrixOperations):
     def explained_variance_ratio(self):
         """
         Calculate the ratio of variance explained by each component.
+        Variance ration shows how much information (variance) each principal component captures from the data.
         
         Returns:
         variance_ratios (list): List of variance ratios for each component

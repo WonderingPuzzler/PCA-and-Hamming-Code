@@ -227,7 +227,7 @@ class VectorMatrixOperations:
         Uses vector_magnitude function for computation.
         Uses scalar_vector_multiply function for normalization.
         Normalization is done by dividing each element of the vector by its magnitude.
-        We normalize a vector so that it has a length of 1, which is useful in many applications.
+        We normalize a vector so that it is between 0 and 1 in length, which is useful when we want to avoid scaling issues in computations.
 
         
         Parameters:
