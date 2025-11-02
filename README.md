@@ -22,6 +22,8 @@ Michael Dipperstein - https://michaeldipperstein.github.io/hamming.html
 
 Vandita Gupta - https://www.geeksforgeeks.org/python/outer-product-on-vector/
 
+prabhjotkushparmar - https://www.geeksforgeeks.org/maths/covariance-matrix/
+
 Zakaria Jaadi https://builtin.com/data-science/step-step-explanation-principal-component-analysis
 
 aishwarya - https://www.geeksforgeeks.org/data-analysis/principal-component-analysis-pca/
