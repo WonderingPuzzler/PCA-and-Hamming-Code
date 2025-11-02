@@ -278,9 +278,6 @@ class PCAImageClassifier(PCA):
         Parameters:
         images (list of lists): Training images where each row is an image
         labels (list): Training labels
-
-        Returns:
-        images_pca (list of lists): PCA-transformed training images
         """
         try:
 
@@ -305,14 +302,13 @@ class PCAImageClassifier(PCA):
 
             print(f"Stored {len(self.get_training_data_pca())} training samples in PCA space for k-NN (k={self.get_k()})")
 
-            return images_pca # return the PCA-transformed training images
-    
+        
         except (TypeError, ValueError):
             print("Error. Ensure images and labels are valid.")
             return
-
-
-    def __predict(self, images, labels):
+        
+    
+    def __predict(self, images):
         """
         Predict labels for new images using k-Nearest Neighbors.
         
@@ -338,7 +334,7 @@ class PCAImageClassifier(PCA):
                 raise ValueError("Classifier must be trained before prediction.")
 
             # Step 1: Transform new images to PCA space
-            images_pca = self.__train(images, labels)
+            images_pca = self.transform(images)
 
             if images_pca is None:
                 raise ValueError("PCA transformation failed during prediction.")
@@ -442,7 +438,7 @@ class PCAImageClassifier(PCA):
         return accuracy # return the accuracy value of correct predictions
 
 
-    def __evaluate_classifier(self, test_images, test_labels, lfw_people):
+    def __evaluate_classifier(self, test_images, test_labels):
         """
         Complete evaluation of the classifier.
         Simply uses our existing functions to predict, and compute accuracy
@@ -463,7 +459,7 @@ class PCAImageClassifier(PCA):
                 raise ValueError("Invalid test images or labels.")
 
             # Step 1: Predict labels for test images
-            predictions = self.__predict(test_images, test_labels)
+            predictions = self.__predict(test_images)
 
             if predictions is None:
                 raise ValueError("Prediction failed during evaluation.")
@@ -622,7 +618,7 @@ class PCAImageClassifier(PCA):
         # Step 6: Evaluate on test data
         print("Step 6: Evaluating...")
 
-        accuracy, predictions = classifier.__evaluate_classifier(test_images, test_labels, lfw_people)
+        accuracy, predictions = classifier.__evaluate_classifier(test_images, test_labels)
         if accuracy is not None:
             print(f"Accuracy: {accuracy * 100:.2f}%")
 
