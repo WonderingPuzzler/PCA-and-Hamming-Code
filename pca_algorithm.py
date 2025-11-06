@@ -291,7 +291,7 @@ class PCA(VectorMatrixOperations):
         Compute the covariance matrix of the centered data
         Handles arrays of any dimension using pure python structures and functions.
         Does so using Sample covariance formula.
-        Uses equation Cov(X,X) = (1/n-1) * X_centered^T * X_centered
+        Uses equation Cov(X,X) = (1/n-1) * X_centered * X_centered^T
         n = number of samples, or in the language of matrices, the number of rows in X_centered
         Uses matrix_multiply function for computation.
         Note the exact equation for the covariance matrix is: Cov(X,X) = sum ((X - mean_X) * (X - mean_X))^T / (n - 1)
@@ -323,8 +323,8 @@ class PCA(VectorMatrixOperations):
             
             X_centered_T = self.transpose(X_centered) # transpose the centered data
             
-            # Compute X_centered^T * X_centered
-            covariance_matrix = self.matrix_multiply(X_centered_T, X_centered)
+            # Compute X_centered * X_centered^T
+            covariance_matrix = self.matrix_multiply(X_centered, X_centered_T)
             
             # Multiply by 1/(n-1) (scalar multiplication)
             covariance_matrix = self.scalar_matrix_multiply(1.0 / (length_rows - 1), covariance_matrix)
