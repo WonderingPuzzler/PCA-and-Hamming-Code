@@ -291,7 +291,7 @@ class PCA(VectorMatrixOperations):
         Compute the covariance matrix of the centered data
         Handles arrays of any dimension using pure python structures and functions.
         Does so using Sample covariance formula.
-        Uses equation Cov(X,X) = (1/n-1) * X_centered * X_centered^T
+        Uses equation Cov(X,X) = (1/n-1) * X_centered^T * X_centered
         n = number of samples, or in the language of matrices, the number of rows in X_centered
         Uses matrix_multiply function for computation.
         Note the exact equation for the covariance matrix is: Cov(X,X) = sum ((X - mean_X) * (X - mean_X))^T / (n - 1)
@@ -322,9 +322,9 @@ class PCA(VectorMatrixOperations):
                 return covariance_matrix
             
             X_centered_T = self.transpose(X_centered) # transpose the centered data
-            
-            # Compute X_centered * X_centered^T
-            covariance_matrix = self.matrix_multiply(X_centered, X_centered_T)
+
+            # Compute X_centered^T * X_centered
+            covariance_matrix = self.matrix_multiply(X_centered_T, X_centered)
             
             # Multiply by 1/(n-1) (scalar multiplication)
             covariance_matrix = self.scalar_matrix_multiply(1.0 / (length_rows - 1), covariance_matrix)
@@ -470,19 +470,19 @@ class PCA(VectorMatrixOperations):
             print("Input matrix A must be a 2D list of numerical values and non-empty.")
             return None, None
 
-    def __deflate_matrix(self, A, eigenvalue, eigenvector):
+    def __deflate_matrix(self, A, eigenvalue, b):
         """
         Deflate the matrix to find the next dominant eigenvalue and eigenvector.
         Deflation is used to remove the influence of the already found dominant eigenvalue and eigenvector from the matrix.
         This allows us to find the next dominant eigenvalue and eigenvector in subsequent iterations.
-        Uses equation A_deflated = A - λ * (u * u^T)
+        Uses equation A_deflated = A - λ * (b * b^T)
         The equation is also known as Hotelling's deflation.
-        where λ is the dominant eigenvalue, u is the dominant eigenvector, and A_deflated is the deflated matrix.
+        where λ is the dominant eigenvalue, b is the dominant eigenvector, and A_deflated is the deflated matrix.
 
         Parameters:
         A (list of lists): The input square matrix.
         eigenvalue (float): The dominant eigenvalue.
-        eigenvector (list): The dominant eigenvector.
+        b (list): The dominant eigenvector.
 
         Returns:
         A_deflated (list of lists): The deflated matrix.
@@ -492,15 +492,15 @@ class PCA(VectorMatrixOperations):
             if not A or not A[0]: # handle empty matrix or vector case
                 raise ValueError
 
-            if eigenvalue is None or eigenvector is None or len(eigenvector) == 0: # handle invalid eigenvalue or eigenvector case
+            if eigenvalue is None or b is None or len(b) == 0: # handle invalid eigenvalue or eigenvector case
                 raise ValueError("Eigenvalue and eigenvector must be valid.")
-            
-            # # compute the outer product v * v^T (note that by doing outer product, 
-            # we don't need to transpose v, as outer product is a calculation that inherently handles the transposition)
-            outer_prod = self.outer_product(eigenvector, eigenvector)
+
+            # # compute the outer product b * b^T (note that by doing outer product,
+            # we don't need to transpose b, as outer product is a calculation that inherently handles the transposition)
+            outer_prod = self.outer_product(b, b)
             scaled_outer_prod = self.scalar_matrix_multiply(eigenvalue, outer_prod) # scale the outer product by the eigenvalue λ
 
-            A_deflated = self.matrix_subtract(A, scaled_outer_prod) # compute the deflated matrix A_new = A - λ * (v * v^T)
+            A_deflated = self.matrix_subtract(A, scaled_outer_prod) # compute the deflated matrix A_new = A - λ * (b * b^T)
 
 
         except (TypeError, IndexError, ValueError): 
@@ -589,7 +589,7 @@ class PCA(VectorMatrixOperations):
         percentage of total variance.
         
         Parameters:
-        variance_threshold (float): Desired percentage of variance to retain (0.0 to 1.0)
+        variance_threshold (float): Desired percentage of variance to retain (0-100).
         
         Returns:
         optimal_components (int): Number of components needed
