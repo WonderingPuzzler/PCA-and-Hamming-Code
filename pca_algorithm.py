@@ -706,7 +706,7 @@ class PCA(VectorMatrixOperations):
 
             if not self.is_fitted(): # ensure the model is fitted before transforming
                 print("PCA model is not fitted yet. Fitting now...")
-                X = self.fit(X)
+                self.fit(X)
 
             if not X or not X[0]: # handle empty data case
                 raise ValueError

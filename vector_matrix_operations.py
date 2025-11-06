@@ -83,8 +83,13 @@ class VectorMatrixOperations:
 
             dot_product = 0.0 # initialize dot product
 
-            for row in range(len(vec1)): # for each element in the vectors
-                dot_product += vec1[row][0] * vec2[row][0] # compute the product and sum up
+            vect1 = self._column_vector_to_list(vec1)
+
+            if vect1 is None: # handle invalid input case
+                raise ValueError("First input vector is not a valid column vector or 1D list.")
+
+            for row in range(len(vect1)): # for each element in the vectors
+                dot_product += vect1[row] * vec2[row][0] # accumulate the product of corresponding elements by using equation vec1^T * vec2
 
         except (TypeError, IndexError): # handle invalid input case
             print("Input vectors must be column vectors (2D lists) or 1D lists and non-empty.")
@@ -424,17 +429,21 @@ class VectorMatrixOperations:
     
     def matrix_multiply(self, A, B):
         """
-        Multiply two matrices.
-        Uses the dot product definition of matrix multiplication.
+        Multiply two matrices using the dot product definition of matrix multiplication.
 
-        Uses equation C[row][col] = sum over k of A[row][k] * B[k][col]
+        
+        Matrix multiplication C = A × B can be computed as:
+        C[i][j] = dot_product(row_i_of_A, column_j_of_B)
+        
+        This leverages the mathematical fact that each element of the result matrix
+        is the dot product of a row from the first matrix with a column from the second matrix.
         
         Parameters:
-        A (list of lists): The first input matrix.
-        B (list of lists): The second input matrix.
+        A (list of lists): The first input matrix (m × n).
+        B (list of lists): The second input matrix (n × p).
 
         Returns:
-        C (list of lists): The resulting matrix after multiplication.
+        C (list of lists): The resulting matrix after multiplication (m × p).
         """
 
         try: 
@@ -442,27 +451,30 @@ class VectorMatrixOperations:
                 raise ValueError 
         
             if len(A[0]) != len(B): # check if dimensions are compatible
-                print("Number of columns in the first matrix must be equal to the number of rows in the second matrix.")
-                return None
+                raise ValueError("Number of columns in the first matrix must be equal to the number of rows in the second matrix.")
             
             C = [[0.0 for _ in range(len(B[0]))] for _ in range(len(A))] 
 
             # Add progress bar for large matrix multiplications
-            
             row_iterator = tqdm(range(len(A)), desc="Matrix multiply", leave=False) 
             
             for row in row_iterator: # for each row in A
                 for col in range(len(B[0])): # for each column in B
-                    # Extract the column from B by iterating over its rows
-                    column_vector = [B[k][col] for k in range(len(B))]
-                    # Compute the dot product of the row from A and the column from B
-
-                    sum_product = 0.0
-                    for k in range(len(A[0])): # iterate over the shared dimension
-                        sum_product += A[row][k] * column_vector[k] # accumulate the product
-
-                    if sum_product is not None:
-                        C[row][col] = sum_product
+                    # Convert matrix row to column vector format for dot product
+                    row_vector = self._list_to_column_vector(A[row])
+                    
+                    # Extract column from B and convert to column vector format
+                    column_data = [B[k][col] for k in range(len(B))]
+                    column_vector = self._list_to_column_vector(column_data)
+                    
+                    # Compute dot product using existing robust function
+                    # This handles all edge cases and error checking automatically
+                    dot_result = self.vector_dot_product(row_vector, column_vector)
+                    
+                    if dot_result is not None:
+                        C[row][col] = dot_result
+                    else:
+                        raise ValueError("Error computing dot product during matrix multiplication.")
 
         except (TypeError, IndexError, ValueError):
             print("Input matrices must be 2D lists of numerical values and non-empty.")
@@ -475,7 +487,7 @@ class VectorMatrixOperations:
         """
         Compute the outer product of two column vectors.
         Outer product is defined as a matrix where each element (i,j) is the product of vec1[i] and vec2[j].
-        For column vectors: vec1 () vec2^T
+        For column vectors: vec1 * vec2^T
         
         Parameters:
         vec1 (list of lists): The first input column vector.
