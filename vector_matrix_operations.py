@@ -13,7 +13,7 @@ class VectorMatrixOperations:
     """
 
     # Helper Functions for Vector Conversion
-    def _list_to_column_vector(self, vec_list):
+    def list_to_column_vector(self, vec_list):
         """
         Convert a 1D list to a 2D column vector.
         
@@ -27,7 +27,7 @@ class VectorMatrixOperations:
             return None
         return [[element] for element in vec_list] # wrap each element in its own list
     
-    def _is_column_vector(self, vec):
+    def is_column_vector(self, vec):
         """
         Check if input is a proper column vector (2D list with single column).
         
@@ -43,7 +43,7 @@ class VectorMatrixOperations:
             return False
         return True
 
-    def _column_vector_to_list(self, vec_column):
+    def column_vector_to_list(self, vec_column):
         """
         Convert a 2D column vector to a 1D list.
         
@@ -55,7 +55,7 @@ class VectorMatrixOperations:
         """
         if not vec_column:
             return None
-        if not self._is_column_vector(vec_column):
+        if not self.is_column_vector(vec_column):
             return None
         return [row[0] for row in vec_column] # extract the single element from each row
 
@@ -83,7 +83,7 @@ class VectorMatrixOperations:
 
             dot_product = 0.0 # initialize dot product
 
-            vect1 = self._column_vector_to_list(vec1)
+            vect1 = self.column_vector_to_list(vec1)
 
             if vect1 is None: # handle invalid input case
                 raise ValueError("First input vector is not a valid column vector or 1D list.")
@@ -320,7 +320,7 @@ class VectorMatrixOperations:
             
             for row in range(len(matrix)):
                 # Convert matrix row to column vector for dot product
-                matrix_row_as_col = self._list_to_column_vector(matrix[row])
+                matrix_row_as_col = self.list_to_column_vector(matrix[row])
                 dot_result = self.vector_dot_product(matrix_row_as_col, vector) # compute the dot product of each matrix row with the vector
 
                 if dot_result is not None: # handle error case from dot product
@@ -461,12 +461,12 @@ class VectorMatrixOperations:
             for row in row_iterator: # for each row in A
                 for col in range(len(B[0])): # for each column in B
                     # Convert matrix row to column vector format for dot product
-                    row_vector = self._list_to_column_vector(A[row])
+                    row_vector = self.list_to_column_vector(A[row])
                     
                     # Extract column from B and convert to column vector format
                     column_data = [B[k][col] for k in range(len(B))]
-                    column_vector = self._list_to_column_vector(column_data)
-                    
+                    column_vector = self.list_to_column_vector(column_data)
+
                     # Compute dot product using existing robust function
                     # This handles all edge cases and error checking automatically
                     dot_result = self.vector_dot_product(row_vector, column_vector)

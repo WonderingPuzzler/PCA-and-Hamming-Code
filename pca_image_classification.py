@@ -38,6 +38,9 @@ class PCAImageClassifier(PCA):
         n_components (int): How many principal components to keep
         k (int): Number of nearest neighbors to use for classification (default=9)
         variance_threshold (float): Desired variance retention (0.0 to 1.0)
+
+        Returns:
+        None
         """
         super().__init__(n_components)
         self.set_k(k)  # Use setter for validation
@@ -49,6 +52,9 @@ class PCAImageClassifier(PCA):
     def get_k(self):
         """
         Get the number of neighbors (k) used in k-NN classification.
+
+        Parameters:
+        None
         
         Returns:
         k (int): Number of neighbors
@@ -58,6 +64,9 @@ class PCAImageClassifier(PCA):
     def get_training_data_pca(self):
         """
         Get the training data transformed into PCA space.
+
+        Parameters:
+        None
         
         Returns:
         training_data_pca (list of lists): Training images in PCA space
@@ -69,6 +78,9 @@ class PCAImageClassifier(PCA):
         """
         Get the training labels corresponding to the PCA-transformed training data.
 
+        Parameters:
+        None
+
         Returns:
         training_labels (list): Labels for the training images
         """
@@ -78,6 +90,9 @@ class PCAImageClassifier(PCA):
     def get_variance_threshold(self):
         """
         Get the variance threshold for automatic component selection.
+
+        Parameters:
+        None
         
         Returns:
         variance_threshold (float): Desired variance retention ratio
@@ -90,6 +105,9 @@ class PCAImageClassifier(PCA):
         
         Parameters:
         k (int): Number of neighbors
+
+        Returns:
+        None
         """
         if not isinstance(k, int) or k <= 0: # Make sure k is a positive integer and not less than or equal to zero
             raise ValueError("k must be a positive integer.")
@@ -102,6 +120,9 @@ class PCAImageClassifier(PCA):
         
         Parameters:
         training_data_pca (list of lists): Training images in PCA space
+
+        Returns:
+        None
         """
         if training_data_pca is not None: # Validate input if not None
 
@@ -119,6 +140,9 @@ class PCAImageClassifier(PCA):
 
         Parameters:
         training_labels (list): Labels for the training images
+
+        Returns:
+        None
         """
         if training_labels is not None: # Validate input if not None
 
@@ -133,6 +157,9 @@ class PCAImageClassifier(PCA):
         
         Parameters:
         variance_threshold (float): Desired variance retention ratio (0.0 to 1.0)
+
+        Returns:
+        None
         """
         try:
             if not isinstance(variance_threshold, (int, float)): # Make sure it's a number
@@ -150,6 +177,9 @@ class PCAImageClassifier(PCA):
     def __load_faces_dataset(self):
         """
         Load the fetch_lfw_people dataset from sklearn.
+
+        Parameters:
+        None
         
         Returns:
         images (list of lists): Each inner list contains pixel values for one face image (row format)
@@ -348,7 +378,7 @@ class PCAImageClassifier(PCA):
             for img_pca in tqdm(images_pca, desc="Classifying images", leave=False):
                 
                 # Convert row to column vector for vector operations if needed
-                if not self._is_column_vector(img_pca):
+                if not self.is_column_vector(img_pca):
                     img_pca_column = [[val] for val in img_pca]
                 else:
                     img_pca_column = img_pca
@@ -360,7 +390,7 @@ class PCAImageClassifier(PCA):
                     training_sample_row = training_data[i] # get the i-th training sample (row format)
                     
                     # Convert training sample row to column vector for vector operations if needed
-                    if not self._is_column_vector(training_sample_row):
+                    if not self.is_column_vector(training_sample_row):
                         training_sample_column = [[val] for val in training_sample_row]
                     else:
                         training_sample_column = training_sample_row
@@ -488,6 +518,9 @@ class PCAImageClassifier(PCA):
         lfw_people: The LFW dataset object (to get target names and image shape info)
         num_samples (int): Number of sample images to display (default=30)
         save_plot (bool): Whether to save the plot to a file
+
+        Returns:
+        None
         """
         
         try:
@@ -578,6 +611,9 @@ class PCAImageClassifier(PCA):
         n_components (int): Number of PCA components to use (uses current setting if None)
         k (int): Number of nearest neighbors for k-NN classification (uses current setting if None)
         variance_threshold (float): Variance threshold for automatic selection (uses current setting if None)
+
+        Returns:
+        None
         """
         # Use current values if not provided
         if n_components is None:

@@ -34,6 +34,9 @@ class PCA(VectorMatrixOperations):
         variance_eigenvalues (list): The variance explained by each component. Variance is represented by the eigenvalues of the covariance matrix and measures how much information (variance) each principal component captures from the data.
         fitted (bool): Whether the model has been fitted to data. Fitted means that the principal components and variance have been computed from the data.
         mean (list): The mean of the data. 
+
+        Returns:
+        None
         """
         self.set_n_components(n_components) # number of principal components to retain
         self.set_components(components)  # principal components after fitting
@@ -45,6 +48,9 @@ class PCA(VectorMatrixOperations):
         """
         Get the number of principal components to retain.
 
+        Parameters:
+        None
+
         Returns:
         int: The number of principal components.
         """
@@ -53,6 +59,9 @@ class PCA(VectorMatrixOperations):
     def get_components(self):
         """
         Get the principal components matrix in (n_components, n_features) format.
+
+        Parameters:
+        None
 
         Returns:
         list of lists: The principal components matrix where:
@@ -66,6 +75,9 @@ class PCA(VectorMatrixOperations):
         """
         Get the variance explained by each component.
 
+        Parameters:
+        None
+
         Returns:
         list: The variance explained by each component.
         """
@@ -75,6 +87,9 @@ class PCA(VectorMatrixOperations):
         """
         Check if the model has been fitted to data.
 
+        Parameters:
+        None
+
         Returns:
         bool: True if the model is fitted, False otherwise.
         """
@@ -83,6 +98,9 @@ class PCA(VectorMatrixOperations):
     def get_mean(self):
         """
         Get the mean of the data.
+
+        Parameters:
+        None
 
         Returns:
         list: The mean of the data.
@@ -96,6 +114,9 @@ class PCA(VectorMatrixOperations):
 
         Parameters:
         n_components (int): The number of principal components.
+
+        Returns:
+        None
         """
         try:
             if not isinstance(n_components, int) or n_components <= 0: # Check if n_components is a positive integer and greater than zero
@@ -114,6 +135,9 @@ class PCA(VectorMatrixOperations):
         Parameters:
         components (list of lists): The principal components as (n_components, n_features) matrix.
                                   Each row is a component, each column is a feature.
+
+        Returns:
+        None
         """
         try:
             if components is not None:
@@ -144,6 +168,9 @@ class PCA(VectorMatrixOperations):
 
         Parameters:
         variance_eigenvalues (list): The variance explained by each component.
+
+        Returns:
+        None
         """
         try:
             if variance_eigenvalues is not None: # Check if variance eigenvalues is provided
@@ -169,6 +196,9 @@ class PCA(VectorMatrixOperations):
 
         Parameters:
         fitted (bool): True if the model is fitted, False otherwise.
+
+        Returns: 
+        None
         """
         try:
             if not isinstance(fitted, bool): # Check if fitted is a boolean value (True or False)
@@ -191,7 +221,7 @@ class PCA(VectorMatrixOperations):
             if mean is not None:
 
                 # Only accept proper 2D column vectors - no conversion
-                if not self._is_column_vector(mean):
+                if not self.is_column_vector(mean):
                     raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...]. No automatic conversion from 1D lists.")
                 
                 # Check if all values are numerical
@@ -265,7 +295,7 @@ class PCA(VectorMatrixOperations):
                 raise ValueError("Mean cannot be None")
 
             # Only accept proper 2D column vectors - no conversion
-            if not self._is_column_vector(mean):
+            if not self.is_column_vector(mean):
                 raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...]. No automatic conversion from 1D lists.")
         
             length_rows = len(X) # number of rows/samples
@@ -563,7 +593,10 @@ class PCA(VectorMatrixOperations):
     def explained_variance_ratio(self):
         """
         Calculate the ratio of variance explained by each component.
-        Variance ration shows how much information (variance) each principal component captures from the data.
+        Variance ratio shows how much information (variance) each principal component captures from the data.
+
+        Parameters:
+        None
         
         Returns:
         variance_ratios (list): List of variance ratios for each component
@@ -795,7 +828,7 @@ class PCA(VectorMatrixOperations):
             return None
         
         # Convert 2D column vector to 1D for display formatting
-        if self._is_column_vector(mean):
+        if self.is_column_vector(mean):
             formatted_mean = [f"{row[0]:.3f}" for row in mean] # format each mean value to 3 decimal places
         else:
             formatted_mean = [f"{m:.3f}" for m in mean] # format each mean value to 3 decimal places
