@@ -22,36 +22,63 @@ For details on usage, please look at the following section: [Usage.md ](https://
 
 Big thanks to the following sources! They've been a huge help to me in the process of making these programs!
 
-Michael Dipperstein - https://michaeldipperstein.github.io/hamming.html 
+aishwarya.27. (2025, July 11). Principal component analysis(Pca). GeeksforGeeks. https://www.geeksforgeeks.org/data-analysis/principal-component-analysis-pca/
 
-Vandita Gupta - https://www.geeksforgeeks.org/python/outer-product-on-vector/
+Bourke, D. (2024a, September 3). 03. Pytorch computer vision. Github. https://www.learnpytorch.io/03_pytorch_computer_vision/
 
-prabhjotkushparmar - https://www.geeksforgeeks.org/maths/covariance-matrix/
+Bourke, D. (2024b, September 11). 01. Pytorch workflow fundamentals. Learnpytorch.Io; GitHub. https://www.learnpytorch.io/01_pytorch_workflow/
 
-Zakaria Jaadi https://builtin.com/data-science/step-step-explanation-principal-component-analysis
+Bourke, D. (2025, January 6). 02. Pytorch neural network classification. GitHub. https://www.learnpytorch.io/02_pytorch_classification/
 
-aishwarya - https://www.geeksforgeeks.org/data-analysis/principal-component-analysis-pca/
+Dipperstein, M. (2018, December 27). Hamming (7,4) code discussion and implementation. GitHub. https://michaeldipperstein.github.io/hamming.html
 
-Michel Kulhandjian & Atri Rudra - https://cse.buffalo.edu/faculty/atri/courses/coding-theory/lectures/lect5.pdf
+Gupta, V. (2025, May 8). Outer Product on Vector. GeeksforGeeks. https://www.geeksforgeeks.org/python/outer-product-on-vector/
 
-Haoru Liu - https://math.uchicago.edu/~may/REU2012/REUPapers/LiuH.pdf
+Jaadi, Z. (2025, June 23). Principal component analysis (Pca): Explained step-by-step. Built In. https://builtin.com/data-science/step-step-explanation-principal-component-analysis
 
-Marvin Lanhenke - https://builtin.com/data-science/eigendecomposition
+kartik. (2025, August 23). K-nearest neighbor(Knn) algorithm. GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
 
-Mirko Savasta - https://medium.com/analytics-vidhya/pca-a-linear-transformation-f8aacd4eb007
+Kulhandjian , M., & Rudra, A. (2007, September 7). Lecture 5: Linear Codes. Buffalo.Edu; Department of Computer Science and Engineering - University at Buffalo. https://cse.buffalo.edu/faculty/atri/courses/coding-theory/lectures/lect5.pdf
 
-Stephen Roberts & Michaelmas Term - https://www.robots.ox.ac.uk/~sjrob/Teaching/EngComp/ecl4.pdf
+Lanhenke, M. (2023, November 16). Eigendecomposition explained. Built In. https://builtin.com/data-science/eigendecomposition
+
+Lay, D. C., Lay, S. R., & McDonald, J. (2021). Linear algebra and its applications (Sixth edition. Rental edition.). Pearson.
+
+Liu, H. (2012, September 29). ERROR-CORRECTING CODES AND FINITE FIELDS. Math.UChicago; University of Chicago. https://math.uchicago.edu/~may/REU2012/REUPapers/LiuH.pdf
+
+Love, B. (2016a, January 9). Linear Algebra—Determinants (1 of 2). YouTube. https://www.youtube.com/watch?v=WAg-ozv8Trg
+
+Love, B. (2016b, January 9). Linear Algebra—Determinants (2 of 2). YouTube. https://www.youtube.com/watch?v=-SfhIxoiD7I
+
+Love, B. (2016c, January 9). Linear Algebra—Eigenvalues and Eigenvectors. YouTube. https://www.youtube.com/watch?v=5_CLdaQSE6U
+
+Love, B. (2016d, January 9). Linear Algebra—Inner Product, Vector Length, Orthogonality. YouTube. https://www.youtube.com/watch?v=-DDsguw-M2w
+
+Love, B. (2016e, January 9). Linear Algebra—Linear Independence. YouTube. https://www.youtube.com/watch?v=FM6DbT6J1XQ
+
+Love, B. (2016f, January 9). Linear Algebra—Matrix Diagonalization. YouTube. https://www.youtube.com/watch?v=jkG8kF8BM20
+
+Love, B. (2016g, January 9). Linear Algebra—Matrix Operations. YouTube. https://www.youtube.com/watch?v=rUrFNrmp3s4
+
+Love, B. (2016h, January 9). Linear Algebra—The Matrix Equation Ax = b (1 of 2). YouTube. https://www.youtube.com/watch?v=Yz2qH7c5yQM&t=1s
+
+Love, B. (2016i, January 9). Linear Algebra—The Matrix Equation Ax = b (2 of 2). YouTube. https://www.youtube.com/watch?v=-pvnRTwXxqY
+
+Love, B. (2016j, January 9). Linear Algebra—Vector Equations (1 of 2). YouTube. https://www.youtube.com/watch?v=ghfTtjLz7bI
+
+Love, B. (2016k, January 9). Linear Algebra—Vector Equations (2 of 2). YouTube. https://www.youtube.com/watch?v=VjkZful09sA
+
+Margalit, D., Rabinoff, J., & Rolen, L. (2019). Interactive linear algebra.  Georgia Institute of Technology. https://textbooks.math.gatech.edu/ila/ila.pdf (Original work published 2017)
+
+prabhjotkushparmar. (2025, July 23). Covariance matrix. GeeksforGeeks. https://www.geeksforgeeks.org/maths/covariance-matrix/
+
+Raschka, S., & Mirjalili, V. (04). Python machine learning: Machine learning and deep learning with Python, scikit-learn, and TensorFlow (Second edition, fourth release,[fully revised and updated]). Packt Publishing.
+
+Roberts , S., & Term , M. (n.d.). Computation of matrix eigenvalues and eigenvectors . University of Oxford.
+
+Savasta, M. (2019, April 7). Pca: A linear transformation. Analytics Vidhya. https://medium.com/analytics-vidhya/pca-a-linear-transformation-f8aacd4eb007
+
+vinayedula. (2025, April 28). Power method—Determine largest eigenvalue and eigenvector in python. GeeksforGeeks. https://www.geeksforgeeks.org/python/power-method-determine-largest-eigenvalue-and-eigenvector-in-python/
 
 Weisstein, Eric W. "Finite Field." From MathWorld--A Wolfram Resource. https://mathworld.wolfram.com/FiniteField.html
-
-Dan Margalit, Joseph Rabinoff, & Larry Rolen - https://textbooks.math.gatech.edu/ila/determinants-cofactors.html
-
-vinayedula - https://www.geeksforgeeks.org/python/power-method-determine-largest-eigenvalue-and-eigenvector-in-python/
-
-kartik - https://www.geeksforgeeks.org/machine-learning/k-nearest-neighbours/
-
-Daniel Bourke - https://www.learnpytorch.io/      
-https://www.learnpytorch.io/01_pytorch_workflow/   
-https://www.learnpytorch.io/02_pytorch_classification/      
-https://www.learnpytorch.io/03_pytorch_computer_vision/
 

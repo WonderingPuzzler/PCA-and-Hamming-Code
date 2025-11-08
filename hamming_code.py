@@ -199,10 +199,10 @@ class HammingCode(VectorMatrixOperations):
         - i1,i2,i3,i4 represent the identity matrix positions in the bit arrangement
 
         For example, if the arrangement is ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4'], then the matrix would be:
-            [[0, 1, 1, 1, 0, 0, 0],  (identity[0] contributes to p2, p3, i1)
-            [1, 0, 1, 0, 1, 0, 0],  (identity[1] contributes to p1, p3, i2)
-            [1, 1, 0, 0, 0, 1, 0],  (identity[2] contributes to p1, p2, i3)
-            [1, 1, 1, 0, 0, 0, 1]]  (identity[3] contributes to p1, p2, i4)
+           [[0, 1, 1, 1, 0, 0, 0],  (identity[0] contributes to p2, p3, and is i1)
+            [1, 0, 1, 0, 1, 0, 0],  (identity[1] contributes to p1, p3, and is i2)
+            [1, 1, 0, 0, 0, 1, 0],  (identity[2] contributes to p1, p2, and is i3)
+            [1, 1, 1, 0, 0, 0, 1]]  (identity[3] contributes to p1, p2, p3, and is i4)
 
         Parameters:
         None
@@ -263,9 +263,9 @@ class HammingCode(VectorMatrixOperations):
         - H * G^T = 0 (in modulo 2 arithmetic)
 
         For example, if the arrangement is ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4'], then the matrix would be:
-            [[1, 0, 0, 0, 1, 1, 1],  (p1 checks i2, i3, i4)
-             [0, 1, 0, 1, 0, 1, 1],  (p2 checks i1, i3, i4)
-             [0, 0, 1, 1, 1, 0, 1]]  (p3 checks i1, i2, i4)
+            [[1, 0, 0, 0, 1, 1, 1],  (p1 has  i2, i3, i4 in its equation)
+             [0, 1, 0, 1, 0, 1, 1],  (p2 has i1, i3, i4 in its equation)
+             [0, 0, 1, 1, 1, 0, 1]]  (p3 has i1, i2, i4 in its equation)
 
         Parameters:
         None
