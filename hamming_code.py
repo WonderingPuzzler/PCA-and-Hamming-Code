@@ -17,6 +17,8 @@ class HammingCode(VectorMatrixOperations):
     The bit_arrangement parameter determines how parity and I-bits are ordered in the codeword.
     Remember, 'I-bits' (i1,i2,i3,i4) refer to identity matrix positions in the bit arrangement,
     while 'input data' refers to the actual 4-bit data vector being encoded.
+
+    Another important note: if we say i1, i2, i3, i4, we can also mean i[0], i[1], i[2], i[3] respectively in code.
     """
     
     def __init__(self, bit_arrangement=None, data=None):
@@ -507,11 +509,15 @@ class HammingCode(VectorMatrixOperations):
             
             # Find which column in H matrix matches the syndrome
             error_position = None
-            for pos in range(len(received_bits)):
-                # Extract the actual column from H (3x7 matrix)
-                column = [[self.get_H()[i][pos]] for i in range(len(self.get_H()))] 
 
-                if column == syndrome:
+            for pos in range(len(received_bits)): # Iterate through each column position in H (0 to 6)
+                column = []
+
+                # Extract the actual column from H (3x7 matrix)
+                for i in range(len(self.get_H())): 
+                    column.append(self.get_H()[i][pos]) # Get the bit at row i, column pos
+
+                if column == syndrome: # If the column matches the syndrome, then we found the error position
                     error_position = pos
                     break
             
@@ -630,10 +636,10 @@ class HammingCode(VectorMatrixOperations):
         arrangements = [
             ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4'],  # Standard arrangement - parity first
             ['i1', 'i2', 'i3', 'i4', 'p1', 'p2', 'p3'],  # Data first
-            ['p1', 'i1', 'p2', 'i2', 'p3', 'i3', 'i4'],  # Interleaved
+            ['p1', 'i1', 'p2', 'i3', 'p3', 'i4', 'i2'],  # Random
         ]
 
-        arrangement_names = ["Standard (P-first)", "Data-first", "Interleaved"]
+        arrangement_names = ["Standard (P-first)", "Data-first", "Random"]
         test_data = [[1], [0], [1], [0]]  # Test data vector
         
         print("Testing same data with different bit arrangements:")
