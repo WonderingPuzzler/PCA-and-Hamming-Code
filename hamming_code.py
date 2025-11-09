@@ -1,5 +1,4 @@
 from vector_matrix_operations import *
-import math
 
 
 class HammingCode(VectorMatrixOperations):
@@ -30,10 +29,10 @@ class HammingCode(VectorMatrixOperations):
                                ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4'] for standard arrangement,
                                ['i1', 'i2', 'i3', 'i4', 'p1', 'p2', 'p3'] for I-bits-first arrangement,
                                etc. (i1,i2,i3,i4 are identity matrix positions; p1,p2,p3 are parity)
-
-        The bit arrangement is perhaps one of the most critical aspects of this implementation.
+        The bit arrangement is perhaps one of the most critical aspects of Hamming code.
         As when the user specifies the arrangement, they are defining where the identity matrix and parity bits are located in the codeword.
         Which affects the construction of the generator [G] and parity check [H] matrices.
+
         data (list): A 2D column vector [[bit], [bit], [bit], [bit]] representing the input data to encode.
 
         Returns:
@@ -41,7 +40,7 @@ class HammingCode(VectorMatrixOperations):
         """
         super().__init__()
 
-        # Set default standard arrangement if none provided
+        # Set default arrangement if none provided
         if bit_arrangement is None:
             bit_arrangement = ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4']  # Standard arrangement with parity bits first
         
@@ -262,7 +261,7 @@ class HammingCode(VectorMatrixOperations):
         
         The parity check matrix is constructed so that:
         - Each row corresponds to one parity bit equation
-        - H * G^T = 0 (in modulo 2 arithmetic)
+        - Each column corresponds to one codeword bit position
 
         For example, if the arrangement is ['p1', 'p2', 'p3', 'i1', 'i2', 'i3', 'i4'], then the matrix would be:
             [[1, 0, 0, 0, 1, 1, 1],  (p1 has  i2, i3, i4 in its equation)
@@ -396,14 +395,14 @@ class HammingCode(VectorMatrixOperations):
             # Get I-bit positions in sorted order (i1, i2, i3, i4)
             ibit_positions = self.__find_ibit_positions()
             
-            # Extract the identity matrix columns from G
+            # Extract the identity matrix rows from G
             identity_matrix = []
             for row in self.get_G(): # For each row in G
                 identity_row = [] # To store the identity bits for this row
                 for pos in ibit_positions: # For each I-bit position
                     identity_row.append(row[pos]) # Extract the bit at that position
                 identity_matrix.append(identity_row)  # Add the row to the identity matrix
-            
+
             return identity_matrix
             
         except (IndexError, ValueError) as e:
@@ -492,7 +491,6 @@ class HammingCode(VectorMatrixOperations):
     def __correct_error(self, received_bits, syndrome):
         """
         Correct a single-bit error in the received bits based on the syndrome.
-        Can only correct single-bit errors with Hamming code.
 
         Parameters:
         received_bits (list): A 1D row matrix representing the received codeword.
@@ -509,6 +507,9 @@ class HammingCode(VectorMatrixOperations):
             
             # Find which column in H matrix matches the syndrome
             error_position = None
+            
+            # Convert syndrome from 2D column vector [[a], [b], [c]] to 1D list [a, b, c] for comparison
+            syndrome_1d = self.column_vector_to_list(syndrome)
 
             for pos in range(len(received_bits)): # Iterate through each column position in H (0 to 6)
                 column = []
@@ -517,7 +518,7 @@ class HammingCode(VectorMatrixOperations):
                 for i in range(len(self.get_H())): 
                     column.append(self.get_H()[i][pos]) # Get the bit at row i, column pos
 
-                if column == syndrome: # If the column matches the syndrome, then we found the error position
+                if column == syndrome_1d: # If the column matches the syndrome, then we found the error position
                     error_position = pos
                     break
             
@@ -558,7 +559,8 @@ class HammingCode(VectorMatrixOperations):
             else:
                 calculated_syndrome = syndrome
 
-            if correct_errors:
+            # Correct errors if enabled and syndrome indicates an error
+            if correct_errors or not all(row[0] == 0 for row in calculated_syndrome):
                 corrected_bits = self.__correct_error(received_bits, calculated_syndrome)
             else:
                 corrected_bits = received_bits

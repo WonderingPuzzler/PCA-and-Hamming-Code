@@ -220,9 +220,9 @@ class PCA(VectorMatrixOperations):
         try:
             if mean is not None:
 
-                # Only accept proper 2D column vectors - no conversion
+                # Only accept proper 2D column vectors
                 if not self.is_column_vector(mean):
-                    raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...]. No automatic conversion from 1D lists.")
+                    raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...]")
                 
                 # Check if all values are numerical
                 for i, row in enumerate(mean):
@@ -294,13 +294,15 @@ class PCA(VectorMatrixOperations):
             if mean is None:
                 raise ValueError("Mean cannot be None")
 
-            # Only accept proper 2D column vectors - no conversion
+            # Only accept proper 2D column vectors 
             if not self.is_column_vector(mean):
-                raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...]. No automatic conversion from 1D lists.")
+                raise ValueError("Mean must be a proper 2D column vector format [[val1], [val2], ...].")
         
             length_rows = len(X) # number of rows/samples
             width_columns = len(X[0]) # number of columns/features
-            self.set_mean(mean) # store the mean for later use (we pass __center_data mean the mean we computed in __mean_calculation)
+
+            self.set_mean(mean) # store the mean for later use (we pass __center_data the mean we computed in __mean_calculation)
+
             X_centered = [[0 for _ in range(width_columns)] for _ in range(length_rows)]  # create a new matrix to hold the centered data
 
             # Add progress bar for centering data
@@ -325,7 +327,20 @@ class PCA(VectorMatrixOperations):
         n = number of samples, or in the language of matrices, the number of rows in X_centered
         Uses matrix_multiply function for computation.
         Note the exact equation for the covariance matrix is: Cov(X,X) = sum ((X - mean_X) * (X - mean_X))^T / (n - 1)
-        But since we are passing in centered data, we can use the simplified equation above.
+        But lets break down why we can use matrix multiplication instead: 
+
+        For example, say basicaly that the centered matrix (with variables x and y) is: [[x1, y1], 
+                                                                                         [x2, y2], 
+                                                                                         [x3, y3]]
+        X_centered^T would be: [[x1, x2, x3],
+                                [y1, y2, y3]]
+    
+        Well, the covariance matrix asks us to compute: [[cov(x,x), cov(x,y)], 
+                                                         [cov(x,y), cov(y,y)]]
+
+        However, the rows of x_centered dot produceted with the columns of x_centered^T give us exactly that matrix, not the other way around!
+
+        Therefore, the equation must be: Cov(X,X) = (1/n-1) * X_centered^T * X_centered!
 
         The covariance matrix is important because it shows us how the different parts of the matrix are related to each other.
 
@@ -464,7 +479,7 @@ class PCA(VectorMatrixOperations):
                 # Handle the case where normalization fails (zero vector)
                 if eigenvector_b_next is None:
                     # If we get a zero vector, the eigenvalue is 0, return column vector
-                    eigenvector_b = [[1.0] if i == 0 else [0.0] for i in range(n)]
+                    eigenvector_b = [[1.0] if i == 0 else [0.0] for i in range(n)] # this vector is arbitrary since eigenvalue is 0
                     return 0.0, eigenvector_b
                 
 
@@ -569,7 +584,7 @@ class PCA(VectorMatrixOperations):
             A_current = covariance_matrix # start with the original covariance matrix
 
             # Progress bar for finding components
-            component_pbar = tqdm(range(num_components), desc="Finding principal components")
+            component_pbar = tqdm(range(num_components), desc="Finding principal components", leave=False)
 
             for component in component_pbar: # iterate to find the top 'num_components' eigenvalue-eigenvector pairs
 
@@ -673,7 +688,7 @@ class PCA(VectorMatrixOperations):
             print(f"Fitting PCA with {len(X)} samples and {len(X[0])} features...")
             
             # Progress through main PCA fitting steps
-            with tqdm(total=4, desc="PCA Fitting") as pbar:
+            with tqdm(total=4, desc="PCA Fitting", leave=False) as pbar:
                 # Step 1: Compute the mean of each column/feature
                 pbar.set_description("Computing mean")
                 mean = self.__mean_calculation(X)
@@ -747,7 +762,7 @@ class PCA(VectorMatrixOperations):
             print(f"Transforming {len(X)} samples to {self.get_n_components()} dimensions...") # display transformation info 
             
             # Progress through transformation steps
-            with tqdm(total=3, desc="PCA Transform") as pbar:
+            with tqdm(total=3, desc="PCA Transform", leave=False) as pbar:
 
                 # Step 1: Center the data by subtracting the mean.
                 # We center the data because PCA assumes that the data is centered around the origin.
@@ -892,7 +907,7 @@ class PCA(VectorMatrixOperations):
             print(f"  Component {i + 1}: {val:.6f}") # format each eigenvalue to 6 decimal places
         
         print("Eigenvectors (principal components):")
-        print("COMPONENT MATRIX FORMAT: Each row = component, each column = feature weight")
+        print("Component Matrix Format: Each row = component, each column = feature weight")
 
         for i, vec in enumerate(self.get_components()):
             # Components are stored as row vectors [a, b, c] where:

@@ -9,6 +9,7 @@ class VectorMatrixOperations:
     
     VECTOR REPRESENTATION:
     - Vectors are represented as 2D lists (column vectors): [[a], [b], [c]]
+    - Row matrices/vectors are represented as 1D lists: [a, b, c]
     
     """
 
@@ -248,7 +249,7 @@ class VectorMatrixOperations:
 
             magnitude = self.vector_magnitude(vector) # compute the magnitude of the vector
 
-            if magnitude is None or magnitude <= 1e-15: # handle zero magnitude case or None return
+            if magnitude is None or magnitude <= 1e-15: # handle zero magnitude case or None return (we use a small threshold because floating point arithmetic is rarely precise)
                 raise ValueError("Cannot normalize a zero vector or error computing magnitude.")
             
             normalized_vector = self.scalar_vector_multiply(1 / magnitude, vector) # normalize the vector using equation v_normalized = v / ||v||
@@ -467,8 +468,7 @@ class VectorMatrixOperations:
                     column_data = [B[k][col] for k in range(len(B))]
                     column_vector = self.list_to_column_vector(column_data)
 
-                    # Compute dot product using existing robust function
-                    # This handles all edge cases and error checking automatically
+                    # Compute dot product
                     dot_result = self.vector_dot_product(row_vector, column_vector)
                     
                     if dot_result is not None:
