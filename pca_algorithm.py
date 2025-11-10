@@ -473,7 +473,7 @@ class PCA(VectorMatrixOperations):
                 # calculate the matrix-by-vector product Ab
                 Ab = self.matrix_vector_multiply(A, eigenvector_b)
 
-                # Normalize the vector Ab so we can get the next approximation of the eigenvector
+                # Normalize the vector Ab so we can get the next approximation of the eigenvector (this is basically the /||A * b_{k-1}|| part of the equation)
                 eigenvector_b_next = self.normalize_vector(Ab)
                 
                 # Handle the case where normalization fails (zero vector)
